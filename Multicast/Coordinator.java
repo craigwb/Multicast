@@ -103,7 +103,7 @@ public class Coordinator extends Thread {
 	}
 
 	public static void main(String[] args) {
-		System.out.println("SocketServer Example");
+		System.out.println("Coordinator");
 		// initial config file
 		boolean quit = false;
 		int timeThresh = 0;
@@ -127,8 +127,8 @@ public class Coordinator extends Thread {
 			while (true) {
 				manny.add_coord(server.accept(), manny);
 			}
-		} catch (IOException ex) {
-			System.out.println("Unable to start server.");
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		} finally {
 			try {
 				if (server != null)
