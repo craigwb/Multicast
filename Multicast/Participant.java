@@ -48,7 +48,7 @@ public class Participant {
 			this.bw = bw;
 			System.out.println("Connecting to host " + host + " on port " + port + ".");
 			try {
-				socket = new Socket(host, 8081);
+				socket = new Socket(host, port);
 				out = new PrintWriter(socket.getOutputStream(), true);
 				in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			} catch (Exception e) {
