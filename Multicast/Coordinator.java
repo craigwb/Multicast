@@ -1,6 +1,7 @@
 import java.io.*;
 import java.net.*;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class Coordinator extends Thread {
 	protected Socket socket;
@@ -8,7 +9,7 @@ public class Coordinator extends Thread {
 	private CoordMan man;
 	public boolean connected = false;// for multicast
 	public boolean send_message = false;
-	private int last_message_recieved;
+
 
 	public Coordinator(Socket socket, CoordMan man) {
 		this.socket = socket;
@@ -42,6 +43,7 @@ public class Coordinator extends Thread {
 					if (args.hasNextInt()) {
 						send_message = true;
 						connected = true;
+						TimeUnit.SECONDS.sleep(1);
 						multicast = new Socket(socket.getInetAddress(), args.nextInt());
 						out.write("server: registered\n".getBytes());
 						out.flush();
@@ -60,8 +62,9 @@ public class Coordinator extends Thread {
 						send_message = true;
 						connected = true;
 						multicast = new Socket(socket.getInetAddress(), args.nextInt());
-						out.write("server: registered\n".getBytes());
+						out.write("server: reconnected\n".getBytes());
 						out.flush();
+						man.get_missed(this);
 					} else {
 						out.write("server: bad port\n".getBytes());
 						out.flush();
@@ -86,8 +89,8 @@ public class Coordinator extends Thread {
 				out.flush();
 			}
 
-		} catch (IOException ex) {
-			System.out.println("Unable to get streams from client");
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		} finally {
 			try {
 				in.close();
@@ -118,7 +121,7 @@ public class Coordinator extends Thread {
 		}
 		// end initial config
 		ServerSocket server = null;
-		CoordMan manny = new CoordMan();
+		CoordMan manny = new CoordMan(timeThresh);
 		try {
 			server = new ServerSocket(port);
 			while (true) {
