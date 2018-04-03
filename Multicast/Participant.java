@@ -71,8 +71,7 @@ public class Participant {
 					try {
 						if (args.hasNextInt()) {
 						ss = new ServerSocket(args.nextInt());
-						System.out.println("Allow system 5 seconds to connect.");
-						TimeUnit.SECONDS.sleep(5);
+						//System.out.println("Allow system 5 seconds to connect.");
 						mult = new mult_listener(ss.accept());
 						}
 					} catch (Exception e) {
@@ -86,8 +85,7 @@ public class Participant {
 					try {
 						if (args.hasNextInt()) {
 							ss = new ServerSocket(args.nextInt());
-							System.out.println("Allow system 5 seconds to connect.");
-							TimeUnit.SECONDS.sleep(5);
+							//System.out.println("Allow system 5 seconds to connect.");
 							mult = new mult_listener(ss.accept());
 							}
 					} catch (Exception e) {
