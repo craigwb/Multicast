@@ -61,6 +61,7 @@ public class Coordinator extends Thread {
 					if (args.hasNextInt()) {
 						send_message = true;
 						connected = true;
+						TimeUnit.SECONDS.sleep(1);
 						multicast = new Socket(socket.getInetAddress(), args.nextInt());
 						out.write("server: reconnected\n".getBytes());
 						out.flush();
